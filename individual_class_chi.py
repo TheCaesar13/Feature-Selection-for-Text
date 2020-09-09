@@ -1,3 +1,11 @@
+###################################################################################
+"""
+  Modified scipy chi-square function to return the whole array of chi values for every 
+variable-class pair instead of the average value for all the classes coresponding to a variable.
+The original implementation can be accessed at:
+https://github.com/scipy/scipy/tree/master/scipy/stats
+"""
+###################################################################################
 import numpy as np
 from scipy import special, stats
 from scipy.sparse import issparse
@@ -7,10 +15,7 @@ from sklearn.utils import (as_float_array, check_array, check_X_y, safe_sqr,
 from sklearn.utils.extmath import safe_sparse_dot, row_norms
 
 def _chisquare(f_obs, f_exp):
-    """Fast replacement for scipy.stats.chisquare.
-    Version from https://github.com/scipy/scipy/pull/2525 with additional
-    optimizations.
-    """
+
     f_obs = np.asarray(f_obs, dtype=np.float64)
 
     k = len(f_obs)
