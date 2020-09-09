@@ -83,6 +83,31 @@ selected_train_dict = delete_cols_csr(ohsumed_tokenized,indices)
 five_fold = KFold(n_splits=5, random_state=None, shuffle=False)
 #five_fold.split(selected_train_dict)
 
+# Variables to hold the results from the 5 fold cross-validation
+RFC_acc = []
+RFC_prec = []
+RFC_recall = []
+RFC_fscore = []
+RFC_mae = []
+RFC_time = []
+KNN_acc = []
+KNN_prec = []
+KNN_recall = []
+KNN_fscore = []  
+KNN_mae = []
+KNN_time =[]
+SGD_acc = []
+SGD_prec = []
+SGD_recall = []
+SGD_fscore = []
+SGD_mae = []
+SGD_time = []
+N_B_acc = []
+N_B_prec = []
+N_B_recall = []
+N_B_fscore = []
+N_B_mae = []
+N_B_time = []
 for train_index, test_index in five_fold.split(selected_train_dict):
     #          SPLIT THE DATASET         #
     train_data, test_data = delete_rows_csr(selected_train_dict, test_index), delete_rows_csr(selected_train_dict, train_index)
@@ -90,12 +115,6 @@ for train_index, test_index in five_fold.split(selected_train_dict):
     #          FIT THE NODELS            #
     # Evaluating with classifiers
     Naive_Bayes_CLS = MultinomialNB()
-    N_B_acc = []
-    N_B_prec = []
-    N_B_recall = []
-    N_B_fscore = []
-    N_B_mae = []
-    N_B_time = []
     start_time = time.time()
     Naive_Bayes_CLS.fit(train_data, train_label)
     predictions = Naive_Bayes_CLS.predict(test_data)
@@ -107,12 +126,6 @@ for train_index, test_index in five_fold.split(selected_train_dict):
     N_B_fscore.append(metrics.f1_score(test_label, predictions, average="micro"))
 
     SGD_CLS = SGDClassifier()
-    SGD_acc = []
-    SGD_prec = []
-    SGD_recall = []
-    SGD_fscore = []
-    SGD_mae = []
-    SGD_time = []
     start_time = time.time()
     SGD_CLS.fit(train_data, train_label)
     predictions = SGD_CLS.predict(test_data)
@@ -125,12 +138,6 @@ for train_index, test_index in five_fold.split(selected_train_dict):
 
 
     KNN_CLS = KNeighborsClassifier(n_neighbors=10)
-    KNN_acc = []
-    KNN_prec = []
-    KNN_recall = []
-    KNN_fscore = []
-    KNN_mae = []
-    KNN_time =[]
     start_time = time.time()
     KNN_CLS.fit(train_data, train_label)
     predictions = KNN_CLS.predict(test_data)
@@ -142,12 +149,6 @@ for train_index, test_index in five_fold.split(selected_train_dict):
     KNN_fscore.append(metrics.f1_score(test_label, predictions, average="micro"))
 
     RFC_CLS = RandomForestClassifier()
-    RFC_acc = []
-    RFC_prec = []
-    RFC_recall = []
-    RFC_fscore = []
-    RFC_mae = []
-    RFC_time = []
     start_time = time.time()
     RFC_CLS.fit(train_data, train_label)
     predictions = RFC_CLS.predict(test_data)
